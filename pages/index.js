@@ -99,8 +99,7 @@ export default function Home() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            &nbsp;- Copyright © {dt.getFullYear()} شَوَّال‎
-          </a>
+            &nbsp;- Copyright © {dt.getFullYear()} شَوَّال -</a>
         </p>
       </footer>
     </div>
