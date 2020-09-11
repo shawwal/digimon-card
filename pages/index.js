@@ -3,10 +3,12 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
+  const [digimonData, setDigimonData] = useState([]);
   const [digimonList, setDigimonList] = useState([]);
   const [error, setError] = useState('');
-  
-  let url = process.env.NEXT_PUBLIC_END_POINT + '/api/digimon?page=1&limit=21';
+  const [pageNo, setPageNo] = useState(1);
+
+  let url = process.env.NEXT_PUBLIC_END_POINT + '/api/digimon?page=' + pageNo + '&limit=21';
 
   const getDigimon = async () => {
     fetch(url)
@@ -18,6 +20,7 @@ export default function Home() {
           }
           // Examine the text in the response
           response.json().then(function (data) {
+            setDigimonData(data);
             setDigimonList(data.results);
           });
         }
@@ -29,7 +32,17 @@ export default function Home() {
 
   useEffect(() => {
     getDigimon();
-  }, []);
+  }, [pageNo]);
+
+  const nextPressed = () => {
+    console.log('next');
+    setPageNo(pageNo + 1)
+  }
+
+  const prevPressed = () => {
+    console.log('prev');
+    setPageNo(pageNo - 1)
+  }
 
   const dt = new Date();
   const checkStatus = error != '' ? error : 'Loading ...';
@@ -56,6 +69,11 @@ export default function Home() {
               </div>
             )
           }
+        </div>
+        <p>{pageNo}</p>
+        <div className={styles.navbutton}>
+          {digimonData?.prev ? <div><button onClick={prevPressed}>Prev</button></div> : <div />}
+          {digimonData?.next ? <div><button onClick={nextPressed}>Next</button> </div> : <div>Last Page</div>}
         </div>
       </main>
 
