@@ -9,7 +9,7 @@ export default function Home() {
   const liveUrl = 'https://digimon-card.vercel.app';
   const stagUrl = 'http://localhost:3000';
   
-  let url = liveUrl + '/api/digimon';
+  let url = stagUrl + '/api/digimon?page=1&limit=20';
 
   const getDigimon = async () => {
     fetch(url)
@@ -21,7 +21,7 @@ export default function Home() {
           }
           // Examine the text in the response
           response.json().then(function (data) {
-            setDigimonList(data);
+            setDigimonList(data.results);
           });
         }
       )
