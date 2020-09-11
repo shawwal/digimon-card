@@ -1,7 +1,7 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
-import digimonList from "./../data/digimonList";
+import digimonList from "./../../components/digimonList";
 export default (req, res) => {
-
+  console.log(digimonList);
   const page = parseInt(req.query.page);
   const limit = parseInt(req.query.limit);
 
