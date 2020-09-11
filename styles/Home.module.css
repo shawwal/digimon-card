@@ -121,6 +121,13 @@
   width: 200px;
 }
 
+.navbutton {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  /* border: 1px solid red; */
+}
+
 @media (max-width: 600px) {
   .grid {
     width: 100%;

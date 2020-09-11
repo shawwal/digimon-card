@@ -3,13 +3,12 @@ import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
+  const [digimonData, setDigimonData] = useState([]);
   const [digimonList, setDigimonList] = useState([]);
   const [error, setError] = useState('');
+  const [pageNo, setPageNo] = useState(1);
 
-  const liveUrl = 'https://digimon-card.vercel.app';
-  const stagUrl = 'http://localhost:3000';
-  
-  let url = liveUrl + '/api/digimon';
+  let url = process.env.NEXT_PUBLIC_END_POINT + '/api/digimon?page=' + pageNo + '&limit=21';
 
   const getDigimon = async () => {
     fetch(url)
@@ -21,7 +20,8 @@ export default function Home() {
           }
           // Examine the text in the response
           response.json().then(function (data) {
-            setDigimonList(data);
+            setDigimonData(data);
+            setDigimonList(data.results);
           });
         }
       )
@@ -32,7 +32,22 @@ export default function Home() {
 
   useEffect(() => {
     getDigimon();
-  }, []);
+  }, [pageNo]);
+
+  const topFunction = () => {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
+
+  const nextPressed = () => {
+    setPageNo(pageNo + 1);
+    topFunction();
+  }
+
+  const prevPressed = () => {
+    setPageNo(pageNo - 1);
+    topFunction();
+  }
 
   const dt = new Date();
   const checkStatus = error != '' ? error : 'Loading ...';
@@ -59,6 +74,11 @@ export default function Home() {
               </div>
             )
           }
+        </div>
+        <p>{pageNo}</p>
+        <div className={styles.navbutton}>
+          {digimonData?.prev ? <div><button onClick={prevPressed}>Prev</button></div> : <div />}
+          {digimonData?.next ? <div><button onClick={nextPressed}>Next</button> </div> : <div>Last Page</div>}
         </div>
       </main>
 
