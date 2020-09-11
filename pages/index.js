@@ -34,14 +34,19 @@ export default function Home() {
     getDigimon();
   }, [pageNo]);
 
+  const topFunction = () => {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
+
   const nextPressed = () => {
-    console.log('next');
-    setPageNo(pageNo + 1)
+    setPageNo(pageNo + 1);
+    topFunction();
   }
 
   const prevPressed = () => {
-    console.log('prev');
-    setPageNo(pageNo - 1)
+    setPageNo(pageNo - 1);
+    topFunction();
   }
 
   const dt = new Date();
