@@ -5,8 +5,13 @@ import styles from '../styles/Home.module.css'
 export default function Home() {
   const [digimonList, setDigimonList] = useState([]);
   const [error, setError] = useState('');
+
+  const liveUrl = 'https://digimon-card.vercel.app';
+  const stagUrl = 'http://localhost:3000';
+  
+  let url = liveUrl + '/api/digimon';
+
   const getDigimon = async () => {
-    let url = 'https://digimon-card.vercel.app/api/digimon';
     fetch(url)
       .then(
         function (response) {
@@ -16,7 +21,6 @@ export default function Home() {
           }
           // Examine the text in the response
           response.json().then(function (data) {
-            console.log('data', data)
             setDigimonList(data);
           });
         }
