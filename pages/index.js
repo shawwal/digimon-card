@@ -5,11 +5,8 @@ import styles from '../styles/Home.module.css'
 export default function Home() {
   const [digimonList, setDigimonList] = useState([]);
   const [error, setError] = useState('');
-
-  const liveUrl = 'https://digimon-card.vercel.app';
-  const stagUrl = 'http://localhost:3000';
   
-  let url = stagUrl + '/api/digimon?page=1&limit=20';
+  let url = process.env.NEXT_PUBLIC_END_POINT + '/api/digimon?page=1&limit=21';
 
   const getDigimon = async () => {
     fetch(url)
