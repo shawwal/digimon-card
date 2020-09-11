@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 
-const liveUrl = "https://digimon-card.vercel.app/api/digimon";
+const liveUrl = "https://digimon-card.vercel.app/";
 const stagUrl = "http://localhost:3000/";
 let url = liveUrl;
 
