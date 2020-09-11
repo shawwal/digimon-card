@@ -6,7 +6,7 @@ export default function Home() {
   const [digimonList, setDigimonList] = useState([]);
   const [error, setError] = useState('');
   const getDigimon = async () => {
-    let url = 'https://digimon-api.vercel.app/api/digimon';
+    let url = 'https://digimon-card.vercel.app/api/digimon';
     fetch(url)
       .then(
         function (response) {
@@ -16,6 +16,7 @@ export default function Home() {
           }
           // Examine the text in the response
           response.json().then(function (data) {
+            console.log('data', data)
             setDigimonList(data);
           });
         }
