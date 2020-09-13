@@ -30,6 +30,27 @@ export default function Home() {
       });
   }
 
+  const searchDigimon = async () => {
+    const searchParameter = process.env.NEXT_PUBLIC_END_POINT + '/api/digimon?search=' + searchValue;
+    fetch(searchParameter)
+      .then(
+        function (response) {
+          if (response.status !== 200) {
+            setError('Looks like there was a problem. Status Code: ' + response.status);
+            return;
+          }
+          // Examine the text in the response
+          response.json().then(function (data) {
+            setDigimonData(data);
+            setDigimonList(data.results);
+          });
+        }
+      )
+      .catch(function (err) {
+        setError('Fetch Error :-S', err);
+      });
+  }
+
   useEffect(() => {
     getDigimon();
   }, [pageNo]);
@@ -52,6 +73,26 @@ export default function Home() {
   const dt = new Date();
   const checkStatus = error != '' ? error : 'Loading ...';
 
+  const [searchValue, setValue] = useState("");
+
+  const handleChange = e => {
+    setValue(e.target.value);
+    console.log('value', e.target.value)
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    searchDigimon();
+    // or you can send data to backend
+  };
+
+  const handleKeypress = e => {
+      //it triggers by pressing the enter key
+    if (e.keyCode === 13) {
+      handleSubmit();
+    }
+  };
+
   return (
     <div className={styles.container}>
 
@@ -64,6 +105,16 @@ export default function Home() {
         <h1 className={styles.title}>
           Digimon Card List
         </h1>
+        <form>
+          <input
+            value={searchValue}
+            onChange={handleChange}
+            onKeyPress={handleKeypress}
+          />
+          <button onClick={handleSubmit} type="submit">
+            Submit
+        </button>
+        </form>
         <div className={styles.grid}>
           {digimonList.length === 0 ? <p>{checkStatus}</p> :
             digimonList.map((obj, index) =>
